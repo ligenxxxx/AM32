@@ -43,7 +43,6 @@
 // #define USE_ADC_INPUT
 // #define USE_ALKAS_DEBUG_LED
 
-
 #ifdef LUMENIER_12S_F421
 #define FIRMWARE_NAME "Lumenier 12s"
 #define FILE_NAME "LUMENIER_12S_F421"
