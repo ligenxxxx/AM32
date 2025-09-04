@@ -677,6 +677,7 @@
 #define VOLTAGE_ADC_PIN GPIO_PINS_6
 #endif
 
+
 #ifdef JHEMCU_F421
 #define FIRMWARE_NAME "JHEMCU_F421 "
 #define FILE_NAME "JHEMCU_F421"
