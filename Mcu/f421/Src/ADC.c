@@ -1,20 +1,18 @@
 
 #include "ADC.h"
-
+#include "ntc_tables.h"
 #include "functions.h"
 #include "targets.h"
 
 #ifdef USE_ADC
 
-#ifdef PA6_NTC_ONLY
-uint16_t ADCDataDMA[1];
-#else
+
 #if defined(USE_ADC_INPUT) || defined(USE_NTC)
 uint16_t ADCDataDMA[5];
 #else
 uint16_t ADCDataDMA[4];
 #endif
-#endif
+
 
 extern uint16_t ADC_raw_temp;
 extern uint16_t ADC_raw_volts;
@@ -22,23 +20,8 @@ extern uint16_t ADC_raw_current;
 extern uint16_t ADC_raw_input;
 extern uint16_t ADC_raw_ntc;
 
-#ifdef USE_NTC
-int NTC_table[65] = {
-  400, 332, 264, 230, 208, 192, 180, 170, 161, 
-  154, 147, 141, 136, 131, 127, 122, 119, 115, 
-  111, 108, 105, 102, 99, 96, 94, 91, 88, 86, 
-  84, 81, 79, 77, 74, 72, 70, 68, 66, 63, 61, 
-  59, 57, 55, 53, 50, 48, 46, 44, 41, 39, 37, 
-  34, 32, 29, 26, 23, 20, 16, 13, 9, 4, -1, 
-  -8, -16, -29, -42
-};
-#endif
-
 void ADC_DMA_Callback()
 { // read dma buffer and set extern variables
-#ifdef PA6_NTC_ONLY
-    ADC_raw_temp = ADCDataDMA[0];
-#else
 #ifdef USE_ADC_INPUT
     ADC_raw_temp = ADCDataDMA[3];
     ADC_raw_volts = ADCDataDMA[1] / 2;
@@ -51,11 +34,10 @@ void ADC_DMA_Callback()
     ADC_raw_volts = ADCDataDMA[0];
     ADC_raw_current = ADCDataDMA[1];
   #else
-     ADC_raw_temp = ADCDataDMA[3];
+    ADC_raw_temp = ADCDataDMA[3];
     ADC_raw_volts = ADCDataDMA[0];
     ADC_raw_current = ADCDataDMA[1];
   #endif
-#endif
 #endif
 }
 
